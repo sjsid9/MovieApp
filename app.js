@@ -1,16 +1,16 @@
 var express = require("express");
 var app = express();
 var request = require("request");
-var bodyParser = require("body-parser");
+// var bodyParser = require("body-parser");
 
-var movie;
+// var movie;
 
 app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post("/search", (req, res) => {
-    movie = req.body.movieName;
-    // console.log(movie);
+    // movie = req.body.movieName;
+    console.log(movie);
     res.redirect("/results");
 });
 
@@ -19,6 +19,8 @@ app.get("/", (req, res) => {
 });
 
 app.get("/results", (req, res) => {
+    // var movieName = "california";
+    var movie = req.query.movieName;
     request("http://www.omdbapi.com/?s=" + movie + "&apikey=thewdb", (error, response, body) => {
         if (!error && response.statusCode == 200) {
             var data = JSON.parse(body);
